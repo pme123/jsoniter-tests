@@ -62,6 +62,6 @@ class JsoniterDemoTest extends munit.FunSuite {
     val jsonStr = """{"myEnum":{"type":"A","name":"myName"}}"""
     val obj = readFromString[SumEnumDemo](jsonStr)
     assertEquals(json, jsonStr)
-    assertEquals(obj, SumEnumDemo())
+    assertEquals(obj, SumEnumDemo(A(other = None)))
   }
 }
