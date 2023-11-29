@@ -1,0 +1,7 @@
+/project/target/
+/project/project/
+
+.history3
+/.idea/
+/target/
+/.bsp/sbt.json
