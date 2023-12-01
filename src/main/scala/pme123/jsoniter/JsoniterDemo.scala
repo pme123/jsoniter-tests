@@ -11,6 +11,7 @@ object JsoniterDemo:
       .withTransientNone(true)
       .withTransientEmpty(true)
       .withTransientDefault(false)
+      .withRequireDefaultFields(true)
       .withRequireDiscriminatorFirst(false)
       //.withDiscriminatorFieldName(None)
       //.withCirceLikeObjectEncoding(true)

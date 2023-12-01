@@ -7,11 +7,12 @@ lazy val root = (project in file("."))
     name := "jasoniter-tests"
   )
 
+val jsoniterVersion = "2.25.0"
 libraryDependencies ++= Seq(
   // Use the %%% operator instead of %% for Scala.js and Scala Native
-  "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core"   % "2.23.2",
+  "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core"   % jsoniterVersion,
   // Use the "provided" scope instead when the "compile-internal" scope is not supported
-  "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % "2.23.2" % Provided,
+  "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % jsoniterVersion % Provided,
   "io.github.iltotore" %% "iron-jsoniter" % "2.3.0",
   "org.scalameta" %% "munit" % "0.7.29" % Test
 )
