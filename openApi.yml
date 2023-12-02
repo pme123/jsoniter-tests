@@ -1,0 +1,55 @@
+openapi: 3.1.0
+info:
+  title: My Bookshop
+  version: '1.0'
+paths:
+  /:
+    get:
+      tags:
+      - TRARAH
+      operationId: My Test Endpoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MyCaseClass'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleEnumDemo'
+        '400':
+          description: 'Invalid value for: body'
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    MyCaseClass:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        firstName:
+          type: string
+        isFunny:
+          type: boolean
+    SimpleEnum:
+      type: string
+      enum:
+      - A
+      - B
+      - C
+    SimpleEnumDemo:
+      required:
+      - myEnum
+      type: object
+      properties:
+        myEnum:
+          $ref: '#/components/schemas/SimpleEnum'

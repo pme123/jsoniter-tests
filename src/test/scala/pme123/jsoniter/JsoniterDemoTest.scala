@@ -43,6 +43,7 @@ class JsoniterDemoTest extends munit.FunSuite {
 
   test("simple enum"){
     val json = writeToString(SimpleEnumDemo())
+    println(s"Simple Enum: $json")
     val jsonStr = """{"myEnum":"A"}"""
     val obj = readFromString[SimpleEnumDemo](jsonStr)
     assertEquals(json, jsonStr)
