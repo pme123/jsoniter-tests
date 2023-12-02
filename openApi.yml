@@ -1,9 +1,9 @@
 openapi: 3.1.0
 info:
-  title: My Bookshop
+  title: My Tests
   version: '1.0'
 paths:
-  /:
+  /demo/tests:
     get:
       tags:
       - TRARAH
@@ -27,8 +27,75 @@ paths:
             text/plain:
               schema:
                 type: string
+  /demo/getCodes:
+    get:
+      tags:
+      - TRARAH
+      operationId: Enum Sum Types Codes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/In'
+            examples:
+              WithLanguage:
+                value:
+                  type: WithLanguage
+                  codeTable: accountType
+                  language: DE
+              WithResultKey:
+                value:
+                  type: WithResultKey
+                  codeTable: accountType
+                  resultKey: '2010'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Out'
+        '400':
+          description: 'Invalid value for: body'
+          content:
+            text/plain:
+              schema:
+                type: string
 components:
   schemas:
+    All:
+      required:
+      - codeTable
+      type: object
+      properties:
+        codeTable:
+          type: string
+        customMock:
+          $ref: '#/components/schemas/All1'
+    All1:
+      required:
+      - codeTableResults
+      type: object
+      properties:
+        codeTableResults:
+          $ref: '#/components/schemas/Map_Map_String_String'
+    In:
+      oneOf:
+      - $ref: '#/components/schemas/All'
+      - $ref: '#/components/schemas/WithLanguage'
+      - $ref: '#/components/schemas/WithLanguageAndResultKey'
+      - $ref: '#/components/schemas/WithResultKey'
+    Map_Map_String_String:
+      type: object
+      description: A Map with Language-CodeTableResult of the Requested Code Table,
+        if **NO** language is set.
+      additionalProperties:
+        $ref: '#/components/schemas/Map_String'
+    Map_String:
+      type: object
+      additionalProperties:
+        type: string
     MyCaseClass:
       required:
       - name
@@ -40,6 +107,12 @@ components:
           type: string
         isFunny:
           type: boolean
+    Out:
+      oneOf:
+      - $ref: '#/components/schemas/All1'
+      - $ref: '#/components/schemas/WithLanguage1'
+      - $ref: '#/components/schemas/WithLanguageAndResultKey1'
+      - $ref: '#/components/schemas/WithResultKey1'
     SimpleEnum:
       type: string
       enum:
@@ -53,3 +126,70 @@ components:
       properties:
         myEnum:
           $ref: '#/components/schemas/SimpleEnum'
+    WithLanguage:
+      required:
+      - codeTable
+      - language
+      type: object
+      properties:
+        codeTable:
+          type: string
+        language:
+          type: string
+        customMock:
+          $ref: '#/components/schemas/WithLanguage1'
+    WithLanguage1:
+      required:
+      - codeTableResult
+      type: object
+      properties:
+        codeTableResult:
+          $ref: '#/components/schemas/Map_String'
+    WithLanguageAndResultKey:
+      required:
+      - codeTable
+      - language
+      - resultKey
+      type: object
+      properties:
+        codeTable:
+          type: string
+        language:
+          type: string
+        resultKey:
+          type: string
+        customMock:
+          $ref: '#/components/schemas/WithLanguageAndResultKey1'
+    WithLanguageAndResultKey1:
+      required:
+      - codeForKeyResult
+      type: object
+      properties:
+        codeForKeyResult:
+          type: string
+    WithResultKey:
+      required:
+      - codeTable
+      - resultKey
+      type: object
+      properties:
+        codeTable:
+          type: string
+        resultKey:
+          type: string
+        customMock:
+          $ref: '#/components/schemas/WithResultKey1'
+    WithResultKey1:
+      required:
+      - codeForKeyResult_DE
+      - codeForKeyResult_FR
+      type: object
+      properties:
+        codeForKeyResult_DE:
+          type: string
+          description: |-
+            A value for each language, if **NO** language is set and a resultKey is set.
+                        |- `codeForKeyResult_$LANGUAGE` example: `codeForKeyResult_FR`
+                        |
+        codeForKeyResult_FR:
+          type: string
